@@ -30,7 +30,7 @@ export default class NumberingCommand extends Command {
 
         const model = this.editor.model;
 		const doc = model.document;
-		const text = options.text || this.numbered;
+		const text = options.numbering || this.numbered;
 		const selection = options.range ? model.createSelection( options.range ) : doc.selection;
 
 		model.change( writer => {

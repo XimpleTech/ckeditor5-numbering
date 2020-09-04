@@ -28,9 +28,9 @@ export default class NumberingUI extends Plugin {
 
             // Callback executed once the button is clicked.
             view.on( 'execute', () => {
-                const imageUrl = prompt( 'Image URL' );
+                const theNum = prompt('', command.numbered);
                 
-                editor.execute( 'numbering' );
+                editor.execute('numbering', { "numbering": theNum });
             } );
 
             //view.bind( 'isOn', 'isEnabled' ).to( command, 'value', 'isEnabled' );
