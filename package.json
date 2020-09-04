@@ -29,9 +29,10 @@
     "@ckeditor/ckeditor5-ui": "^22.0.0"
   },
   "devDependencies": {
+    "@ckeditor/ckeditor5-dev-utils": "^22.0.0",
     "@ckeditor/ckeditor5-editor-classic": "^22.0.0",
     "@ckeditor/ckeditor5-engine": "^22.0.0",
-    "@ckeditor/ckeditor5-dev-utils": "^22.0.0",
+    "@ckeditor/ckeditor5-heading": "^22.0.0",
     "@ckeditor/ckeditor5-theme-lark": "^22.0.0",
     "@ckeditor/ckeditor5-widget": "^22.0.0",
     "postcss-loader": "^3.0.0",
