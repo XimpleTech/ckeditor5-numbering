@@ -1,0 +1,13 @@
+/* ckeditort-numbering/theme/numbering.css */
+
+.numbering {
+    background: none;
+    padding: 4px 2px;
+    outline-offset: -2px;
+    line-height: 1em;
+    margin: 0 1px;
+}
+
+.numbering::selection {
+    display: #ffff00;
+}

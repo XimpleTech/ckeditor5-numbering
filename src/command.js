@@ -13,32 +13,59 @@ export default class NumberingCommand extends Command {
 		this.set( 'numbered', '1' );
 	}
 
-    refresh() {
-        // Disable the command if the editor is in read-only mode.
-        this.isEnabled = !this.editor.isReadOnly;
-        
-        // Enable the button initially by default
-        if(this.value == undefined)
-        {
-            this.value = true;
-        }        
+	execute( { numbering } ) {
+        const editor = this.editor;
+
+		const numberingLable = numbering || this.numbered;
+
+        editor.model.change( writer => {
+            // Create a <numbering> elment with the "name" attribute...
+            const numberingElm = writer.createElement( 'numbering', { lable: numberingLable } );
+
+            // ... and insert it into the document.
+            editor.model.insertContent( numberingElm );
+			this.increment(numberingLable);
+
+            // Put the selection on the inserted element.
+            writer.setSelection( numberingElm, 'on' );
+        } );
     }
 
-	execute( options = {} ) {
-        // Toggle the button state
-        this.value = !this.value;
-
+    refresh() {
         const model = this.editor.model;
-		const doc = model.document;
-		const text = options.numbering || this.numbered;
-		const selection = options.range ? model.createSelection( options.range ) : doc.selection;
+        const selection = model.document.selection;
 
-		model.change( writer => {
-			model.insertContent( writer.createText( text, doc.selection.getAttributes() ), selection );
-		} );
+        const isAllowed = model.schema.checkChild( selection.focus.parent, 'numbering' );
 
-		this.increment(text);
+        this.isEnabled = isAllowed;
 	}
+	
+    // refresh() {
+    //     // Disable the command if the editor is in read-only mode.
+    //     this.isEnabled = !this.editor.isReadOnly;
+        
+    //     // Enable the button initially by default
+    //     if(this.value == undefined)
+    //     {
+    //         this.value = true;
+    //     }        
+    // }
+
+	// execute( options = {} ) {
+    //     // Toggle the button state
+    //     this.value = !this.value;
+
+    //     const model = this.editor.model;
+	// 	const doc = model.document;
+	// 	const text = options.numbering || this.numbered;
+	// 	const selection = options.range ? model.createSelection( options.range ) : doc.selection;
+
+	// 	model.change( writer => {
+	// 		model.insertContent( writer.createText( text, doc.selection.getAttributes() ), selection );
+	// 	} );
+
+	// 	this.increment(text);
+	// }
 	
 	increment(listNumber) {
 		let lastNum = listNumber.replace(/(\d+)(?!.*\d)/, this.addOne);

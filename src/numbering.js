@@ -1,6 +1,6 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 
-import NumberingCommand from './command';
+import NumberingEditing from './numberingediting';
 import NumberingUI from './ui';
 
 /**
@@ -13,14 +13,15 @@ export default class Numbering extends Plugin {
     }
 
     static get requires() {
-        return [ NumberingUI, NumberingCommand ]
+        return [ NumberingEditing, NumberingUI ]
     }
 
-    init() {
-        const editor = this.editor;
+    // init() {
+        
+    //     const editor = this.editor;
 
-        editor.commands.add( 'numbering', new NumberingCommand( editor ) );
-    }
+    //     editor.commands.add( 'numbering', new NumberingCommand( editor ) );
+    // }
 
     // init() {
     //     const editor = this.editor;
