@@ -47,7 +47,7 @@ export default class NumberingEditing extends Plugin {
                 classes: [ 'numbering' ]
             },
             model: ( viewElement, { writer: modelWriter } ) => {
-                const label = viewElement.getChild( 0 ).data.slice( 1, -1 );
+                const label = viewElement.getChild( 0 ).data.slice( 0, -1 );
 
                 return modelWriter.createElement( 'numbering', { label } );
             }
