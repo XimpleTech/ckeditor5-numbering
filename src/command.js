@@ -6,79 +6,47 @@ import Command from '@ckeditor/ckeditor5-core/src/command';
  * Handles the toggled state of the button.
  */
 export default class NumberingCommand extends Command {
-    refresh() {
-        // Disable the command if the editor is in read-only mode.
-        this.isEnabled = !this.editor.isReadOnly;
-        
-        // Enable the button initially by default
-        if(this.value == undefined)
-        {
-            this.value = true;
-        }        
+
+	constructor( editor ) {
+		super( editor );
+
+		this.set( 'numbered', '1' );
+	}
+
+	execute( { numbering } ) {
+        const editor = this.editor;
+
+		const numberingLable = numbering || this.numbered;
+
+        editor.model.change( writer => {
+            // Create a <numbering> elment with the "name" attribute...
+            const numberingElm = writer.createElement( 'numbering', { lable: numberingLable } );
+
+            // ... and insert it into the document.
+            editor.model.insertContent( numberingElm );
+			this.increment(numberingLable);
+
+            // Put the selection on the inserted element.
+            writer.setSelection( numberingElm, 'on' );
+        } );
     }
 
-    // execute() {
-    //     // Toggle the button state
-    //     this.value = !this.value;
-
-    //     const model = this.editor.model;
-
-	// 	model.change( writer => {
-	// 		insertNumbering( writer, model );
-	// 	});
-    // }
-
-	execute( options = {} ) {
-        // Toggle the button state
-        this.value = !this.value;
-
+    refresh() {
         const model = this.editor.model;
-		const doc = model.document;
-		const text = options.text || '1.1.2';
-		const selection = options.range ? model.createSelection( options.range ) : doc.selection;
+        const selection = model.document.selection;
 
-		model.change( writer => {
-			model.insertContent( writer.createText( text, doc.selection.getAttributes() ), selection );
-		} );
+        const isAllowed = model.schema.checkChild( selection.focus.parent, 'numbering' );
+
+        this.isEnabled = isAllowed;
 	}
-	
-    // execute( options = {} ) {
-	// 	const model = this.editor.model;
-	// 	const doc = model.document;
-	// 	const text = options.text || 'numbering';
-	// 	const textInsertions = text.length;
-	// 	const selection = options.range ? model.createSelection( options.range ) : doc.selection;
-	// 	const resultRange = options.resultRange;
+		
+	increment(listNumber) {
+		let lastNum = listNumber.replace(/(\d+)(?!.*\d)/, this.addOne);
+		this.numbered = lastNum;
+	}
 
-	// 	model.enqueueChange( this._buffer.batch, writer => {
-	// 		this._buffer.lock();
-
-	// 		// Store the batch as an 'input' batch for the Input.isInput( batch ) check.
-	// 		this._batches.add( this._buffer.batch );
-
-	// 		model.deleteContent( selection );
-
-	// 		if ( text ) {
-	// 			model.insertContent( writer.createText( text, doc.selection.getAttributes() ), selection );
-	// 		}
-
-	// 		if ( resultRange ) {
-	// 			writer.setSelection( resultRange );
-	// 		} else if ( !selection.is( 'documentSelection' ) ) {
-	// 			writer.setSelection( selection );
-	// 		}
-
-	// 		this._buffer.unlock();
-
-	// 		this._buffer.input( textInsertions );
-	// 	} );
-    // }    
+	addOne(match, p1, offset, string) {
+		let num = String(1 + + p1);
+		return num;
+	}    
 };
-
-export function insertNumbering( writer, model, attributes = {} ) {
-	const hrElement = writer.createElement( 'p', attributes );
-
-	const insertAtSelection = findOptimalInsertionPosition( model.document.selection, model );
-
-	model.insertContent( hrElement, insertAtSelection );    
-}
