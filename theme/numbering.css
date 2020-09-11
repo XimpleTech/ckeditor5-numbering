@@ -8,6 +8,6 @@
     margin: 0 1px;
 }
 
-.numbering::selection {
-    display: #ffff00;
+.ck-widget_selected {
+    background: #D3D3D3;
 }

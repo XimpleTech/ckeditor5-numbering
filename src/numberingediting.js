@@ -47,7 +47,6 @@ export default class NumberingEditing extends Plugin {
                 classes: [ 'numbering' ]
             },
             model: ( viewElement, { writer: modelWriter } ) => {
-                // Extract the "numbering" from "{lable}".
                 const name = viewElement.getChild( 0 ).data.slice( 1, -1 );
 
                 return modelWriter.createElement( 'numbering', { lable } );
