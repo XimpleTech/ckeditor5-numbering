@@ -33,8 +33,8 @@ export default class NumberingEditing extends Plugin {
             // The inline widget is self-contained so it cannot be split by the caret and can be selected:
             isObject: true,
 
-            // The placeholder can have many types, like date, name, surname, etc:
-            allowAttributes: [ 'lable' ]
+            // The placeholder can have many types, like date, name, etc:
+            allowAttributes: [ 'label' ]
         } );
     }
 
@@ -47,9 +47,9 @@ export default class NumberingEditing extends Plugin {
                 classes: [ 'numbering' ]
             },
             model: ( viewElement, { writer: modelWriter } ) => {
-                const name = viewElement.getChild( 0 ).data.slice( 1, -1 );
+                const label = viewElement.getChild( 0 ).data.slice( 1, -1 );
 
-                return modelWriter.createElement( 'numbering', { lable } );
+                return modelWriter.createElement( 'numbering', { label } );
             }
         } );
 
@@ -70,7 +70,7 @@ export default class NumberingEditing extends Plugin {
 
         // Helper method for both downcast converters.
         function createNumberingView( modelItem, viewWriter ) {
-            const value = modelItem.getAttribute( 'lable' );
+            const value = modelItem.getAttribute( 'label' );
 
             const numberingView = viewWriter.createContainerElement( 'span', {
                 class: 'numbering'

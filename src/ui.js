@@ -43,7 +43,7 @@ export default class NumberingUI extends Plugin {
         });
         // Callback executed once the button is clicked.
         buttonView.on('execute', () => {
-            command.numbered = inputtextView.element.value;
+            command.numbered = inputtextView.element.value || command.numbered;
             editor.execute('numbering', { "numbering": command.numbered });
         });
         buttonView.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');

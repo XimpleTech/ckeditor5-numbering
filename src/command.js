@@ -16,15 +16,15 @@ export default class NumberingCommand extends Command {
 	execute( { numbering } ) {
         const editor = this.editor;
 
-		const numberingLable = numbering || this.numbered;
+		const numberingLabel = numbering || this.numbered;
 
         editor.model.change( writer => {
             // Create a <numbering> elment with the "name" attribute...
-            const numberingElm = writer.createElement( 'numbering', { lable: numberingLable } );
+            const numberingElm = writer.createElement( 'numbering', { label: numberingLabel } );
 
             // ... and insert it into the document.
             editor.model.insertContent( numberingElm );
-			this.increment(numberingLable);
+			this.increment(numberingLabel);
 
             // Put the selection on the inserted element.
             writer.setSelection( numberingElm, 'on' );
