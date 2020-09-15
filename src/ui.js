@@ -2,7 +2,8 @@ import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import View from '@ckeditor/ckeditor5-ui/src/view';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
 import NumberIcon from '../theme/icons/numbering.svg';
-import InputTextView from '@ckeditor/ckeditor5-ui/src/InputText/inputtextview';
+import InputTextView from '@ckeditor/ckeditor5-ui/src/inputtext/inputtextview';
+import '../theme/ui.css';
 
 /**
  * Handles registering the toggleable button in the 
@@ -18,13 +19,18 @@ export default class NumberingUI extends Plugin {
             const command = editor.commands.get('numbering');
             const inputtextView = this._createInputTextView(locale, command);
             const buttonView = this._createButtonView(locale, command, inputtextView, editor);
-            
+
             view.setTemplate({
                 tag: 'div',
                 children: [
                     inputtextView,
                     buttonView
-                ]
+                ],
+                attributes: {
+                    class: ['ck',
+                        'xck-numbering'
+                    ]
+                }
             });
 
             return view;
@@ -44,7 +50,9 @@ export default class NumberingUI extends Plugin {
         // Callback executed once the button is clicked.
         buttonView.on('execute', () => {
             command.numbered = inputtextView.element.value || command.numbered;
-            editor.execute('numbering', { "numbering": command.numbered });
+            editor.execute('numbering', {
+                "numbering": command.numbered
+            });
         });
         buttonView.bind('isOn', 'isEnabled').to(command, 'value', 'isEnabled');
 
@@ -54,7 +62,7 @@ export default class NumberingUI extends Plugin {
     _createInputTextView(locale, command) {
         const inputtextView = new InputTextView(locale);
         inputtextView.bind('value').to(command, 'numbered');
-        
+
         return inputtextView;
     }
 };
