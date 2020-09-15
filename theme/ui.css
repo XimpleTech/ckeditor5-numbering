@@ -1,0 +1,40 @@
+/* 
+Extra small devices (portrait phones, less than 576px) 
+No media query since this is the default in Bootstrap because it is "mobile first"
+*/
+.xck-numbering>input.ck-input-text {
+    min-width: 1em;
+    max-width: 3.5em;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  
+    .xck-numbering>input.ck-input-text {
+        min-width: 1em;
+        max-width: 3.8em;
+    }
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+    .xck-numbering>input.ck-input-text {
+        min-width: 1em;
+        max-width: 4.6em;
+    }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .xck-numbering>input.ck-input-text {
+        min-width: 1em;
+        max-width: 7em;
+    }
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+    .xck-numbering>input.ck-input-text {
+        min-width: 1em;
+        max-width: 7em;
+    }
+}
